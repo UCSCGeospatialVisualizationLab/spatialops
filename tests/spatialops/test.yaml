@@ -1,0 +1,41 @@
+config:
+  root: s3://cl-lake-test/spatialops-test
+  dx: 0.00026977476123492776
+  epsg: 4326
+  bounds: [-74.754, 15.921, -67.275, 21.144]
+  chunk_size: 1000
+
+overwrite: true
+
+execution_mode:
+  execution_mode: joblib
+  n_jobs: 20
+
+directories:
+  rasters: /app/tests/spatialops/data/rasters/multiintake
+  vectors: /app/tests/spatialops/data/vectors
+
+vector:
+  - id: "gadm"
+    partitions: [GID_0]
+    append_partition_column: region
+    directory: vectors
+    paths: [
+      gadm_minimal.gpkg
+    ]
+
+raster:
+  - type: group
+    id: "Flooding"
+    children:
+      - type: group
+        id: "S1CC"
+        children: 
+          - type: var
+            vars:
+              - id: "RP050"
+                directory: rasters
+                paths: [
+                  DOM_01_S1CC_F_20500p500_CU000_CU000_RP050_hmax.tif,
+                  DOM_02_S1CC_F_20500p500_CU000_CU000_RP050_hmax.tif
+                ]

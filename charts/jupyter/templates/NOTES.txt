@@ -1,0 +1,5 @@
+🎉 Your Jupyter instance has been deployed. You can access it by visiting:
+
+https://{{ include "jupyter.fullname" . }}.{{ .Values.ingress.host }}/tree
+
+You might need to first retrieve your token. You can do that by running `kubectl logs -l app.kubernetes.io/instance={{.Release.Name}} --tail=100 | grep token`.

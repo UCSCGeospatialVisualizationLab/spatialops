@@ -1,0 +1,30 @@
+replicaCount: 2
+
+image:
+  repository: gitlab-registry.nrp-nautilus.io/ucsc-vizlab/spatialops/zarr-server
+  tag: latest
+
+imagePullSecrets:
+  - name: ucsc-vizlab-container-registry
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: haproxy
+  paths:
+    - path: /
+      pathType: Prefix
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 16Gi
+  requests:
+    cpu: 1000m
+    memory: 8Gi

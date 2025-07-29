@@ -1,0 +1,7 @@
+name: geospatial-analysis-environment
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.12.0,<3.13.0
+  - gdal>=3.10.0
+  - pip

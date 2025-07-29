@@ -1,0 +1,43 @@
+replicaCount: 1
+
+image:
+  repository: gitlab-registry.nrp-nautilus.io/ucsc-vizlab/spatialops/cog-server
+  tag: latest
+
+imagePullSecrets:
+  - name: ucsc-vizlab-container-registry
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: haproxy
+  paths:
+    - path: /
+      pathType: Prefix
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
+
+dataMountPath: /data
+s3BucketBase: https://s3-west.nrp-nautilus.io/vizlab-geodatalake-exports
+
+autoscaling:
+  # We're leaving this disabled until we diagnose problems with
+  # pod startup/image pull times on Nautilus.
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80

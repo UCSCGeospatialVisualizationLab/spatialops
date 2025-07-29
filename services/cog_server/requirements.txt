@@ -1,0 +1,11 @@
+boto3
+fastapi
+geopandas
+h5netcdf
+matplotlib
+pandas
+rasterio
+rio-tiler
+rioxarray
+uvicorn
+xarray

@@ -1,0 +1,250 @@
+config:
+  root: s3://cl-lake-test/caribbean-test
+  dx: 0.00026977476123492776
+  epsg: 4326
+  bounds: [-101.81, 3.58, -56.84, 35.61]
+  chunk_size: 5000
+
+compute:
+  mode: joblib
+  kwargs:
+    n_jobs: 40
+    show_progress: true
+  
+overwrite: true
+
+directories:
+  flooding: /cccr-lab/001_projects/002_nbs-adapt/100_BY_REGION_V003
+  data_repository: /cccr-lab/000_data-repository/
+  nbs_adapts: /cccr-lab/001_projects/002_nbs-adapt/001_databases
+
+raster:
+  - type: group
+    id: "Flooding"
+    overwrite: true
+    children:
+      # S1
+      - type: group
+        id: "S1"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S1_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S2"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S2_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S3"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S3_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S4"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S4_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S1CC"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1CC_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1CC_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S1CC_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S1CC_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S2CC"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2CC_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2CC_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S2CC_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S2CC_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S3CC"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3CC_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3CC_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S3CC_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S3CC_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+      - type: group
+        id: "S4CC"
+        children: 
+          # RP010
+          # - type: var
+          #   id: "RP010"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4CC_*_RP010_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          # - type: var
+          #   id: "RP025"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4CC_*_RP025_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true
+          - type: var
+            id: "RP050"
+            directory: flooding
+            glob: '*/160_FLOOD_MAPS/003_V3/*_S4CC_*_RP050_hmax_masked.tif'
+            kwargs:
+              delayed_compute: true
+          # - type: var
+          #   id: "RP100"
+          #   directory: flooding
+          #   glob: '*FL*/160_FLOOD_MAPS/003_V3/*_S4CC_*_RP100_hmax_masked.tif'
+          #   kwargs:
+          #     delayed_compute: true

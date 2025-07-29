@@ -1,0 +1,2 @@
+🎉 The cog-server should be live at
+https://cog-server.nrp-nautilus.io/cogserver/.

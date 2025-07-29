@@ -1,0 +1,52 @@
+config:
+  root: /data/florida-test
+  dx: 0.00026977476123492776
+  epsg: 4326
+  bounds: [-85.53, 23.48, -78.51, 31.7]
+  chunk_size: 5000
+
+compute:
+  mode: joblib
+  kwargs:
+    n_jobs: 40
+    show_progress: true
+
+# overwrite: true
+
+directories:
+  flooding: /cccr-lab/001_projects/002_nbs-adapt/100_BY_REGION_V003
+  data_repository: /cccr-lab/000_data-repository/
+  nbs_adapts: /cccr-lab/001_projects/002_nbs-adapt/001_databases
+  clowrie: /cccr-lab/002_users/004_clowri/
+
+
+raster:
+  - type: group
+    id: "SocioeconomicInputs"
+    overwrite: true
+    children:
+      - type: var
+        id: "GHSL_Population"
+        directory: data_repository
+        paths:
+          - '026_ghsl_pop/GHS_POP_E2020.tif'
+        kwargs:
+          reproject_match_kwargs:
+            conservative_remap: true
+            nan_fix: true
+      - type: var
+        id: "GlobalUrbanFootprint"
+        directory: data_repository
+        paths:
+          - '028_dlr_guf/WSF3d_v02_BuildingArea.tif'
+        kwargs:
+          reproject_match_kwargs:
+            conservative_remap: true
+            nan_fix: true
+      - type: var
+        id: "GHS_BUILT_C"
+        directory: clowrie
+        glob: 'ghsl/**/*.tif'
+        kwargs:
+          reproject_match_kwargs:
+            nan_fix: true

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "jupyter.fullname" . }}
+  labels:
+    {{- include "jupyter.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+spec:
+  rules:
+    - host: {{ printf "%s.%s" (include "jupyter.fullname" .) .Values.ingress.host }}
+      http:
+        paths:
+          {{- range .Values.ingress.paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "jupyter.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+  tls:
+  - hosts:
+    - {{ printf "%s.%s" (include "jupyter.fullname" .) .Values.ingress.host }}

@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: gitlab-registry.nrp-nautilus.io/ucsc-vizlab/spatialops/geospatial-jupyter
+
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8888
+
+ingress:
+  className: haproxy
+  host: nrp-nautilus.io
+  paths:
+    - path: /
+      pathType: Prefix
+
+resources:
+  limits:
+    memory: 512Gi
+    # Normally I do not like setting CPU limits, but without this Nautilus sets
+    # a default limit of 100m, which makes a request over 100m invalid.
+    cpu: 80
+  requests:
+    cpu: 80
+    memory: 256Gi
+
+# This seems to really slow down deploys, so I'm going to leave it disabled by
+# default.
+pvc:
+  name: persistent-storage
+  accessModes:
+    - ReadWriteOnce
+  size: 500Gi
+  storageClassName: rook-ceph-block
+
+s3ExportBucket: vizlab-geodatalake-exports

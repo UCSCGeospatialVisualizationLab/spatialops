@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jupyter.fullname" . }}
+  labels:
+    {{- include "jupyter.labels" . | nindent 4 }}
+spec:
+  strategy:
+    type: Recreate
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "jupyter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "jupyter.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      imagePullSecrets:
+        - name: ucsc-vizlab-container-registry
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_SECRET_ACCESS_KEY
+          - name: AWS_ENDPOINT_URL
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_ENDPOINT_URL
+          - name: AWS_REQUEST_CHECKSUM_CALCULATION
+            value: when_required
+          - name: AWS_RESPONSE_CHECKSUM_VALIDATION
+            value: when_required
+          - name: S3_PUBLIC_EXPORT_BUCKET
+            value: {{ .Values.s3ExportBucket }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.pvc }}
+          volumeMounts:
+          - name: {{ include "jupyter.fullname" $ }}-{{ .name }}
+            mountPath: /app/{{ .name }}
+      volumes:
+      - name: {{ include "jupyter.fullname" $ }}-{{ .name }}
+        persistentVolumeClaim:
+          claimName: {{ include "jupyter.fullname" $ }}-{{ .name }}
+      {{- end }}

@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "cog-server.fullname" . }}
+  labels:
+    {{- include "cog-server.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  rules:
+    - host: {{ printf "%s.nrp-nautilus.io" (include "cog-server.fullname" .) | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "cog-server.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+  tls:
+  - hosts:
+    - {{ printf "%s.nrp-nautilus.io" (include "cog-server.fullname" .) | quote }}
+{{- end }}

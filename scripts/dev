@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -E
+
+DEPLOYMENT_NAME="dev-$USER"
+
+cleanup() {
+    echo
+    echo "Cleaning up deployment..."
+    helm uninstall $DEPLOYMENT_NAME
+    echo "Terminating file watching"
+    trap - SIGINT
+    exit 0
+}
+
+# Set up trap for SIGINT (Ctrl+C)
+trap cleanup SIGINT
+
+# Make sure that the dev server is running. This will also force pods to
+# recreate, which means that the image will be starting clean.
+helm upgrade --install --atomic --debug $DEPLOYMENT_NAME charts/jupyter
+
+[[ "$1" == "spatialoperations" ]] || { echo "Usage: $0 spatialoperations"; exit 1; }
+
+PACKAGE_NAME="$1"
+LOCAL_DIR="$PACKAGE_NAME"
+
+echo "Doing initial sync for $PACKAGE_NAME..."
+./scripts/sync_file.py "$PACKAGE_NAME" ""
+
+echo "Watching: $LOCAL_DIR for changes"
+
+# Start watching for changes
+fswatch \
+  -0 \
+  --one-per-batch \
+  --event=Updated \
+  --exclude=".*~$" \
+  --exclude="/[0-9]+$" \
+  --exclude=".*\.swp$" "$LOCAL_DIR" | \
+  xargs -0 -n1 -I{} ./scripts/sync_file.py "$PACKAGE_NAME" ""

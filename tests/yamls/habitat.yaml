@@ -1,0 +1,27 @@
+config:
+  root: /data/florida-test
+  dx: 0.00026977476123492776
+  epsg: 4326
+  bounds: [-85.53, 23.48, -78.51, 31.7]
+  chunk_size: 5000
+
+compute:
+  mode: joblib
+  kwargs:
+    n_jobs: 40
+    show_progress: true
+
+directories:
+  flooding: /cccr-lab/001_projects/002_nbs-adapt/100_BY_REGION_V003
+  data_repository: /cccr-lab/000_data-repository/
+  nbs_adapts: /cccr-lab/001_projects/002_nbs-adapt/001_databases
+
+vector:
+  - id: "ACA"
+    directory: nbs_adapts
+    glob: '00_DATA_BY_REGION/*FL*/benthic.shp'
+    append_partition_column: "region"
+  - id: "GMW"
+    directory: nbs_adapts
+    glob: '*/GMW_2020_v3.shp'
+    append_partition_column: "intake_idx"

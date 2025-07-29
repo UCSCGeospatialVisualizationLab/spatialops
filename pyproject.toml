@@ -1,0 +1,131 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spatialoperations"
+version = "1.0.0"
+requires-python = '>=3.12, <3.13'
+readme = "README.md"
+description = "Geospatial analysis environment."
+authors = [
+    { name = "Chris Lowrie", email = "lowriechris779@gmail.com" }
+]
+classifiers = [
+    'Programming Language :: Python :: 3',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent'
+]
+license = { text = "MIT" }
+# For some reason boto3 fails when I pin the version with an error in dask
+dependencies = [
+    "boto3",
+    "python-dotenv",
+    "dask[array,dataframe,diagnostics,distributed]>=2025.2.0",
+    "dask>=2025.2.0",
+    "duckdb>=1.2.0",
+    "fastparquet>=2024.11.0",
+    "fiona>=1.10.1",
+    "fsspec>=2025.2.0",
+    "gcsfs>=2025.2.0",
+    "geopandas>=1.0.1",
+    "google-cloud-storage>=3.0.0",
+    "h5netcdf>=1.5.0",
+    "joblib>=1.4.2",
+    "matplotlib>=3.10.0",
+    "memory-profiler>=0.61.0",
+    "numba==0.60.0",
+    "numpy>=2.0.2",
+    "odc-geo>=0.4.9.post0",
+    "pandas>=2.2.3",
+    "pyarrow>=19.0.0",
+    "pytest>=8.3.4",
+    "rasterio>=1.4.3",
+    "rioxarray>=0.18.2",
+    "s2sphere>=0.2.5",
+    "s3fs>=2025.2.0",
+    "toml>=0.10.2",
+    "tqdm>=4.67.1",
+    "uvicorn>=0.34.0",
+    "xarray>=2025.1.2",
+    "xarray-spatial>=0.4.0",
+    "zarr>=3.0.3",
+    "jupyter",
+    "jupyterlab",
+    "lonboard",
+    "matplotlib",
+    "pyproj",
+    "contextily",
+    "plotly",
+    "dash",
+    "folium",
+    "mapclassify",
+    "uv",
+    "xvec",
+    "h3",
+    "earthengine-api",
+    "xarray-regrid",
+    "obstore",
+    "typeguard",
+    "hvplot"
+]
+
+[tool.setuptools]
+packages = { find = { include = ["spatialoperations", "spatialoperations.*"], exclude = ["Dockerfiles", "installation_tests", "charts", "deployment", "version_info"] } }
+
+#[tool.uv.sources]
+# geospatial-analysis-environment = { workspace = true }
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+exclude = [
+    "*.ipynb",
+    "**/*.ipynb",
+    "**/jupyter_notebook_config.py"
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "D",   # pydocstyle
+]
+ignore = [
+    "E203",  # Space before : (needed for Black compatibility)
+    "D100",  # Missing docstring in public module
+    "D107",  # Missing docstring in __init__
+    "D105",  # Missing docstring in magic method
+    "D104",  # Missing docstring in public package
+    "D103",  # Missing docstring in public function
+    "D102",  # Missing docstring in public method
+    "D101",  # Missing docstring in public class
+    "D203",  # 1 blank line required before class docstring (incompatible with D211)
+    "D213",  # Multi-line docstring summary should start at the second line (incompatible with D212)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["your_package_name"]
+force-single-line = false
+single-line-exclusions = ["typing"]
+order-by-type = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+docstring-code-line-length = 88
+
+[tool.uv.workspace]
+members = [
+  "geospatial-analysis-environment",
+  "services/cog_server",
+  "services/zarr_server"
+]
